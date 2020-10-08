@@ -24,6 +24,7 @@ import java.util.Set;
                 "email"
         })
 })
+// TODO We need to figure out how to store user matches. Are we going to use a graph, list, or something else??? ASAP
 public class User {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
