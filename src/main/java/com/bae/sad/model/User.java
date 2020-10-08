@@ -49,6 +49,8 @@ public class User {
         @Size(max = 100)
         private String password;
 
+        // This is where we would declare the data structure to store matches
+
        public User() { }
 
         public User(String name, String email, String password) {
