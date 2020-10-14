@@ -13,12 +13,14 @@ import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.time.Instant;
 
+// We don't want to push these dates with our api response
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(
         value = { "createdAt", "updatedAt"},
         allowGetters = true
 )
+// Date audti class which act more as a utility class to easily keep track of object creation and update
 public abstract class DateAudit  implements Serializable{
     @CreatedDate
     @Column(nullable = false, updatable = false)
