@@ -8,6 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -54,6 +55,9 @@ public class User {
         @NotBlank
         @Size(max = 100)
         private String password;
+
+        @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+        private List<Image> pictures;
 
         @ManyToMany(fetch = FetchType.LAZY)
         @JoinTable(name = "user_roles",
@@ -131,6 +135,14 @@ public class User {
 
         public void setPassword(String password) {
                 this.password = password;
+        }
+
+        public List<Image> getPictures() {
+           return pictures;
+        }
+
+        public void setPictures(List<Image> pictures) {
+           this.pictures = pictures;
         }
 
         public Set<Role> getRoles() {
