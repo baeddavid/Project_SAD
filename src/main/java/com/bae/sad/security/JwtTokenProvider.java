@@ -16,18 +16,23 @@ public class JwtTokenProvider {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
 
+    // The jwt signing key we stored in an .env file
     @Value("${app.jwtSecret}")
     private String jwtSecret;
 
+    // The jwt expiration time from creation stored in an .env file
     @Value("{app.jwtExpirationInMs}")
     private int jwtExpirationInMs;
 
+    // The method for generating a jwt token
     public String generateToken(Authentication authentication) {
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
 
+        // Get the current date to set when the token expires
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
 
+        // Return the built token
         return Jwts.builder()
                 .setSubject(Long.toString(userPrincipal.getId()))
                 .setIssuedAt(new Date())
@@ -36,6 +41,7 @@ public class JwtTokenProvider {
                 .compact();
     }
 
+    // Method to retrieve user id from a jwt token
     public Long getUserIdFromJWT(String token) {
         Claims claims =  Jwts.parser()
                 .setSigningKey(jwtSecret)
@@ -45,8 +51,10 @@ public class JwtTokenProvider {
         return Long.parseLong(claims.getSubject());
     }
 
+    // Method to validate a jwt token
     public boolean validateToken(String authToken) {
         try {
+            // Retrieve the token and return a boolean true
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
             return true;
         } catch(SignatureException ex) {
