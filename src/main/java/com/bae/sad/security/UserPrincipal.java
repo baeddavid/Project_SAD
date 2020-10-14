@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+// Implement user details interface for core user information
 public class UserPrincipal implements UserDetails {
     private Long id;
 
@@ -20,12 +21,15 @@ public class UserPrincipal implements UserDetails {
 
     private String username;
 
+    // Don't resond with user email in api response
     @JsonIgnore
     private String email;
 
+    // Don't respond with user password in api response
     @JsonIgnore
     private String password;
 
+    // A collection of authorities granted to the user
     private Collection<? extends GrantedAuthority> authorities;
 
     public UserPrincipal(Long id, String name, String username, String email, String password, Collection<? extends GrantedAuthority> authorities) {
@@ -37,6 +41,7 @@ public class UserPrincipal implements UserDetails {
         this.authorities = authorities;
     }
 
+    // Method to actually create a user principal
     public static UserPrincipal create(User user) {
         List<GrantedAuthority> authorities = user.getRoles().stream().map(role ->
                 new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toList());
