@@ -52,13 +52,12 @@ public class User {
     @Email
     private String email;
 
+    @OneToOne
+    private UserProfile userProfile;
+
     @NotBlank
     @Size(max = 100)
     private String password;
-
-    @OneToMany(fetch = FetchType.EAGER)
-    private List<Image> pictureList;
-
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
@@ -133,12 +132,12 @@ public class User {
         this.password = password;
     }
 
-    public List<Image> getPictures() {
-        return pictureList;
+    public UserProfile getUserProfile() {
+        return userProfile;
     }
 
-    public void setPictures(List<Image> pictureList) {
-        this.pictureList = pictureList;
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
     }
 
     public Set<Role> getRoles() {
