@@ -1,4 +1,4 @@
-package com.bae.sad.model;
+package com.bae.sad.audit;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
