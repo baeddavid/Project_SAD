@@ -4,9 +4,12 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "UserProfile")
+//  A class that contains all the information of the user such as age, bio, pictures, etc. Not to be confused with the user model which is intended for account creation and authentication.
 public class UserProfile {
 
     @Id
@@ -37,7 +40,15 @@ public class UserProfile {
     @Enumerated(EnumType.STRING)
     private Gender preferredGender;
 
+    // This needs to be deleted
+    @Enumerated(EnumType.STRING)
+    private LikeStatus likeStatus;
+
+    // Does this make sense to have here?
     @OneToMany(fetch = FetchType.EAGER)
+    private List<UserProfile> matches;
+
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Image> pictureList;
 
     public UserProfile() { }
@@ -111,6 +122,14 @@ public class UserProfile {
 
     public void setPreferredGender(Gender preferredGender) {
         this.preferredGender = preferredGender;
+    }
+
+    public LikeStatus getLikeStatus() {
+        return likeStatus;
+    }
+
+    public void setLikeStatus(LikeStatus likeStatus) {
+        this.likeStatus = likeStatus;
     }
 
     public List<Image> getPictureList() {
